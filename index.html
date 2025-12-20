@@ -6,161 +6,258 @@
     <meta http-equiv='Content-Type' content='text/html;charset=UTF-8' />
     <title>General Nitin</title>
     <script id="sap-ui-bootstrap" src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
-        data-sap-ui-theme="sap_horizon_dark" data-sap-ui-xx-bindingSyntax="complex" data-sap-ui-compatVersion="edge"
-        data-sap-ui-libs="sap.m"
+        data-sap-ui-theme="sap_horizon_dark"
+        data-sap-ui-xx-bindingSyntax="complex"
+        data-sap-ui-compatVersion="edge"
+        data-sap-ui-libs="sap.m,sap.uxap,sap.ui.layout,sap.ui.core"
         data-sap-ui-async="true">
-        </script>
+    </script>
     <script>
-        sap.ui.require([
-            "sap/ui/core/Core",
-            "sap/m/library"
-        ], (oCore, mobileLibrary) => {
+        sap.ui.getCore().attachInit(() => {
+            sap.ui.require([
+                "sap/m/library",
+                "sap/uxap/ObjectPageLayout",
+                "sap/uxap/ObjectPageSection",
+                "sap/uxap/ObjectPageSubSection",
+                "sap/m/Title",
+                "sap/m/Text",
+                "sap/m/Link",
+                "sap/m/Label",
+                "sap/m/Avatar",
+                "sap/m/Image",
+                "sap/m/HBox",
+                "sap/m/VBox",
+                "sap/m/FlexBox",
+                "sap/m/Breadcrumbs",
+                "sap/uxap/ObjectPageDynamicHeaderTitle",
+                "sap/m/MessageStrip",
+                "sap/m/ProgressIndicator",
+                "sap/m/Button",
+                "sap/m/List",
+                "sap/m/StandardListItem",
+                "sap/m/ObjectAttribute",
+                "sap/m/ObjectStatus",
+                "sap/ui/layout/VerticalLayout",
+                "sap/ui/layout/HorizontalLayout",
+                "sap/m/Toolbar",
+                "sap/m/ToolbarSpacer",
+                "sap/m/OverflowToolbar"
+            ], (
+                mobileLibrary, ObjectPageLayout, ObjectPageSection, ObjectPageSubSection,
+                Title, Text, Link, Label, Avatar, Image, HBox, VBox, FlexBox, Breadcrumbs,
+                ObjectPageDynamicHeaderTitle, MessageStrip, ProgressIndicator, Button,
+                List, StandardListItem, ObjectAttribute, ObjectStatus,
+                VerticalLayout, HorizontalLayout, Toolbar, ToolbarSpacer, OverflowToolbar
+            ) => {
 
-            const sapCore = sap.ui.getCore().loadLibrary("sap.ui.core", {
-                async: true,
-            });
+                const URLHelper = mobileLibrary.URLHelper;
 
-            const sapM = sap.ui.getCore().loadLibrary("sap.m", {
-                async: true,
-            });
-
-            const sapUxap = sap.ui.getCore().loadLibrary("sap.uxap", {
-                async: true,
-            });
-
-            const sapLayout = sap.ui.getCore().loadLibrary("sap.ui.layout", {
-                async: true,
-            });
-
-            var URLHelper = mobileLibrary.URLHelper;
-            
-            Promise.all([sapCore, sapM, sapUxap]).then(responses => {
-
-                let objectPageLayout = new sap.uxap.ObjectPageLayout("layout", {
-                    id: "ObjectPageLayout",
-                    upperCaseAnchorBar: false,
+                // Main ObjectPageLayout
+                const oObjectPage = new ObjectPageLayout("ObjectPageLayout", {
                     showTitleInHeaderContent: true,
+                    upperCaseAnchorBar: false,
+                    enableLazyLoading: true,
+                    headerTitle: new ObjectPageDynamicHeaderTitle("headerTitle", {
+                        expandedHeading: new HBox({ items: [new Title({ text: "Nitin Kumar", level: "H1" })] }),
+                        snappedHeading: new FlexBox({
+                            alignItems: "Center",
+                            items: [
+                                new Avatar({ src: "https://raw.githubusercontent.com/GeneralNitin/GeneralNitin.github.io/refs/heads/main/resources/dp.jpg" }).addStyleClass("sapUiSmallMarginEnd"),
+                                new Title({ text: "Nitin Kumar" })
+                            ]
+                        }),
+                        breadcrumbs: new Breadcrumbs({ currentLocationText: "Home" }),
+                        expandedContent: [new Text({ text: "Software Engineer" })],
+                        snappedContent: [new Text({ text: "Software Engineer" })],
+                        snappedTitleOnMobile: new Title({ text: "Software Engineer" })
+                    }),
+                    headerContent: [
+                        new FlexBox({
+                            wrap: "Wrap",
+                            items: [
+                                // Avatar
+                                new Avatar({
+                                    src: "https://raw.githubusercontent.com/GeneralNitin/GeneralNitin.github.io/refs/heads/main/resources/dp.jpg",
+                                    displaySize: "L"
+                                }).addStyleClass("sapUiMediumMarginEnd"),
+
+                                // Contact Info
+                                new VerticalLayout({
+                                    content: [
+                                        new Link({
+                                            text: "connect.nitinkumar@gmail.com",
+                                            press: () => URLHelper.triggerEmail("connect.nitinkumar@gmail.com")
+                                        }),
+                                        new Label({ text: "" }),
+                                        new Link({
+                                            text: "GitHub",
+                                            press: () => URLHelper.redirect("https://github.com/GeneralNitin", true)
+                                        })
+                                    ]
+                                }).addStyleClass("sapUiSmallMarginBeginEnd"),
+
+                                // Social Icons
+                                new HorizontalLayout({
+                                    content: [
+                                        new Image({
+                                            src: "https://static-00.iconduck.com/assets.00/linkedin-original-icon-256x256-bckcotyp.png",
+                                            width: "28px", height: "28px",
+                                            press: () => URLHelper.redirect("https://www.linkedin.com/in/nitinkumar30/", true)
+                                        }),
+                                        new Image({
+                                            src: "https://static-00.iconduck.com/assets.00/instagram-icon-256x256-4wmx3xma.png",
+                                            width: "28px", height: "28px",
+                                            press: () => URLHelper.redirect("https://www.instagram.com/nitinkum4r/", true)
+                                        }).addStyleClass("sapUiSmallMarginBegin")
+                                    ]
+                                }).addStyleClass("sapUiMediumMargin"),
+
+                                // Description + Progress
+                                new VerticalLayout({
+                                    content: [
+                                        new Label({ text: "Hi! I'm Nitin, a passionate Software Engineer based in Bangalore, India." }),
+                                        new VBox({
+                                            items: [
+                                                new Label({ text: "" }),
+                                                new Label({ text: "Page Completion" }),
+                                                new ProgressIndicator({ percentValue: 45, displayValue: "45%" })
+                                            ]
+                                        })
+                                    ]
+                                }).addStyleClass("sapUiSmallMarginBeginEnd"),
+
+                                // Location
+                                new VerticalLayout({
+                                    content: [new Label({ text: "📍 Bangalore, India" })]
+                                }).addStyleClass("sapUiSmallMarginBeginEnd")
+                            ]
+                        })
+                    ]
                 });
 
-                // Header
-                var oDynamicHeader = new sap.uxap.ObjectPageDynamicHeaderTitle("header");
-                var mBreadcrumbs = new sap.m.Breadcrumbs({ id: "breadcrumbsId", currentLocationText: "Home" });
-                oDynamicHeader.setBreadcrumbs(mBreadcrumbs);
-                
-                let headerHBox = new sap.m.HBox();
-                headerHBox.addItem(new sap.m.Title({text:"Nitin Kumar", wrapping:true}))
-                oDynamicHeader.setExpandedHeading(headerHBox);
-
-                let headerFlexBox = new sap.m.FlexBox({fitContainer:true, alignItems:"Center"});
-                let headerAvatar = new sap.m.Avatar({src:"https://raw.githubusercontent.com/GeneralNitin/GeneralNitin.github.io/refs/heads/main/resources/dp.jpg"});
-                headerAvatar.addStyleClass("sapUiSmallMarginEnd");
-                headerFlexBox.addItem(headerAvatar);
-                headerFlexBox.addItem(new sap.m.Title({text:"Nitin Kumar", wrapping:true}));
-                oDynamicHeader.setSnappedHeading(headerFlexBox);
-
-                oDynamicHeader.insertExpandedContent(new sap.m.Text({text:"Software Engineer"}));
-                oDynamicHeader.insertSnappedContent(new sap.m.Text({text:"Software Engineer"}));
-                oDynamicHeader.setSnappedTitleOnMobile(new sap.m.Title({text:"Software Engineer"}));
-
-                objectPageLayout.setHeaderTitle(oDynamicHeader);
-
-
-                // Header Content
-                let headerContentFlexBox = new sap.m.FlexBox({wrap:"Wrap"});
-                let headerContentAvatar = new sap.m.Avatar({src:"https://raw.githubusercontent.com/GeneralNitin/GeneralNitin.github.io/refs/heads/main/resources/dp.jpg", displaySize:"L"});
-                headerContentAvatar.addStyleClass("sapUiSmallMarginEnd");
-                headerContentFlexBox.addItem(headerContentAvatar);
-
-                // Header Content Info
-                let headerContentVerticalLayout1 = new sap.ui.layout.VerticalLayout("hcVL1")
-
-                let emailLink = new sap.m.Link({text:"connect.nitinkumar@gmail.com"})
-                emailLink.attachPress(()=>{
-                    URLHelper.triggerEmail("connect.nitinkumar@gmail.com", null, null, null, null, true);
-                });
-                headerContentVerticalLayout1.addContent(emailLink);
-
-                let spacelabel1 = new sap.m.Label({text:""});
-                headerContentVerticalLayout1.addContent(spacelabel1);   
-
-
-                let gitHubLink = new sap.m.Link({text:"GitHub"});
-                gitHubLink.attachPress(()=>{
-                    URLHelper.redirect("https://github.com/GeneralNitin", true);
-                });
-                headerContentVerticalLayout1.addContent(gitHubLink);   
-
-                headerContentVerticalLayout1.addStyleClass("sapUiSmallMarginBeginEnd");
-                headerContentFlexBox.addItem(headerContentVerticalLayout1);
-
-                // Header Content Social Media Link
-                let headerContentHorizontalLayout1 = new sap.ui.layout.HorizontalLayout("hcHL1")
-
-                let linkedInImage = new sap.m.Image({src:"https://static-00.iconduck.com/assets.00/linkedin-original-icon-256x256-bckcotyp.png", height:"20px", width:"20px"});
-                linkedInImage.attachPress(()=>{
-                    URLHelper.redirect("https://www.linkedin.com/in/nitinkumar30/", true);
-                });
-                headerContentHorizontalLayout1.addContent(linkedInImage);   
-
-                let twitterImage = new sap.m.Image({src:"https://static-00.iconduck.com/assets.00/instagram-icon-256x256-4wmx3xma.png", height:"20px", width:"20px"});  
-                twitterImage.attachPress(()=>{
-                    URLHelper.redirect("https://www.instagram.com/nitinkum4r/", true);
-                });
-                twitterImage.addStyleClass("sapUiSmallMarginBegin");
-                headerContentHorizontalLayout1.addContent(twitterImage);
-                headerContentHorizontalLayout1.addStyleClass("sapUiSmallMarginBeginEnd");
-
-                headerContentFlexBox.addItem(headerContentHorizontalLayout1);
-
-                // Description
-                let headerContentVerticalLayout2 = new sap.ui.layout.VerticalLayout("hcVL2")
-                headerContentVerticalLayout2.addStyleClass("sapUiSmallMarginBeginEnd");
-
-                let descriptionLabel = new sap.m.Label({text:"Hi! This is Nitin and I am a Software Engineer"});
-                headerContentVerticalLayout2.addContent(descriptionLabel);
-
-                let descVBox = new sap.m.VBox("descVBox1");
-                let spacelabel2 = new sap.m.Label({text:""});
-                let descriptionLabel2 = new sap.m.Label({text:"Page Completion"});
-                let descriptionProgressIndicator = new sap.m.ProgressIndicator({percentValue:"5", displayValue:"5%"});
-
-                descVBox.addItem(spacelabel2);
-                descVBox.addItem(descriptionLabel2);
-                descVBox.addItem(descriptionProgressIndicator);
-
-                headerContentVerticalLayout2.addContent(descVBox);
-
-                headerContentFlexBox.addItem(headerContentVerticalLayout2);
-
-                // Location
-                let headerContentVerticalLayout3 = new sap.ui.layout.VerticalLayout("hcVL3")
-                headerContentVerticalLayout3.addStyleClass("sapUiSmallMarginBeginEnd");
-
-                let location = new sap.m.Label({text:"Bangalore, India"});
-                headerContentVerticalLayout3.addContent(location);
-
-                headerContentFlexBox.addItem(headerContentVerticalLayout3);
-
-                objectPageLayout.addHeaderContent(headerContentFlexBox);
-
-                let view = new sap.ui.core.mvc.View("view", {height:"100vh"});
-                view.placeAt("uiArea");
-                let messageStrip = new sap.m.MessageStrip("msgStrip", {
-                    text: "This Page is Under Construction  🚧",
-                    showCloseButton: true,
+                // Message Strip - Under Construction
+                const msgStrip = new MessageStrip({
+                    text: "This page is under construction 🚧 – more content coming soon!",
+                    type: "Warning",
                     showIcon: true,
-                    type: "Warning"
+                    showCloseButton: true
                 });
 
-                objectPageLayout.placeAt("view");
+                // Sections
+                oObjectPage.addSection(new ObjectPageSection({
+                    title: "About Me",
+                    subSections: [new ObjectPageSubSection({
+                        blocks: [new VBox({
+                            items: [
+                                new Text({
+                                    text: "I'm Nitin Kumar, a software engineer specializing in backend technologies including Java, Spring Boot, GoLang, SQL, NoSQL, Kafka, and Redis. With experience at TDB and SAP Labs, I've delivered scalable solutions like iSCSI Block Volumes for Google Cloud, enhanced billing pipelines, and migrated applications to modern frameworks, reducing costs and improving performance."
+                                }),
+                                new Text({
+                                    text: "My skills extend to DevOps practices with Git, Jenkins, Docker, Kubernetes, AWS, CloudFormation, Elasticsearch, and RabbitMQ. I'm passionate about problem-solving, communication, and project management in dynamic tech environments."
+                                }).addStyleClass("sapUiMediumMarginTop")
+                            ]
+                        }).addStyleClass("sapUiMediumMargin")]
+                    })]
+                }));
+
+                oObjectPage.addSection(new ObjectPageSection({
+                    title: "Experience",
+                    subSections: [new ObjectPageSubSection({
+                        blocks: [new List({
+                            items: [
+                                new StandardListItem({
+                                    title: "Software Engineer",
+                                    description: "TBD • 2024 – Present",
+                                    info: "Bangalore, India",
+                                    type: "Active"
+                                }),
+                                new StandardListItem({
+                                    title: "Software Engineer",
+                                    description: "SAP • 2020 – 2024",
+                                    info: "Bangalore, India"
+                                })
+                            ]
+                        }).addStyleClass("sapUiMediumMargin")]
+                    })]
+                }));
+
+                oObjectPage.addSection(new ObjectPageSection({
+                    title: "Education",
+                    subSections: [new ObjectPageSubSection({
+                        blocks: [new VBox({
+                            items: [
+                                new ObjectAttribute({ title: "Master of Technology (M. Tech)", text: "Software Engineering" }),
+                                new ObjectAttribute({ title: "University", text: "Birla Institute of Technology And Science, Pilani (BITS Pilani)" }),
+                                new ObjectAttribute({ title: "Graduated", text: "2024" })
+                            ]
+                        }).addStyleClass("sapUiMediumMargin")]
+                    })]
+                }));
+
+                oObjectPage.addSection(new ObjectPageSection({
+                    title: "Skills",
+                    subSections: [new ObjectPageSubSection({
+                        blocks: [new FlexBox({
+                            wrap: "Wrap",
+                            items: [
+                                "Java", "Go", "Spring Boot", "JavaScript", "Python",
+                                "SAP UI5", "AWS", "GCP", "Docker", "Kubernetes", "Git", "SQL", "MongoDB"
+                            ].map(skill => new Button({ text: skill, type: "Transparent" }).addStyleClass("sapUiTinyMargin"))
+                        }).addStyleClass("sapUiMediumMargin")]
+                    })]
+                }));
+
+                oObjectPage.addSection(new ObjectPageSection({
+                    title: "Projects",
+                    subSections: [new ObjectPageSubSection({
+                        blocks: [new List({
+                            items: [
+                                new StandardListItem({
+                                    title: "Inquire IQ",
+                                    description: "A GenAI-based solution to assist SAP’s customer, Henkel, and their Product Support team.",
+                                    info: "AI, Python, FAISS"
+                                }),
+                                new StandardListItem({
+                                    title: "BTP Lens",
+                                    description: "An AI-powered application for estimating cost based on the architecture diagram.",
+                                    info: "SAP UI5, AI"
+                                }),
+                                new StandardListItem({
+                                    title: "Scholar Incorporation Tool",
+                                    description: "A tool for automating the incorporation process of scholars.",
+                                    info: "Backend APIs, Spring Boot"
+                                })
+                            ]
+                        }).addStyleClass("sapUiMediumMargin")]
+                    })]
+                }));
+
+                oObjectPage.addSection(new ObjectPageSection({
+                    title: "Contact",
+                    subSections: [new ObjectPageSubSection({
+                        blocks: [new VBox({
+                            items: [
+                                new Text({ text: "Feel free to reach out!" }),
+                                new Link({ text: "Email me", press: () => URLHelper.triggerEmail("connect.nitinkumar@gmail.com") }).addStyleClass("sapUiSmallMarginTop"),
+                                new Link({ text: "LinkedIn", press: () => URLHelper.redirect("https://www.linkedin.com/in/nitinkumar30/", true) }),
+                                new Link({ text: "GitHub", press: () => URLHelper.redirect("https://github.com/GeneralNitin", true) })
+                            ]
+                        }).addStyleClass("sapUiMediumMargin")]
+                    })]
+                }));
+
+                // Place everything
+                new VBox({
+                    items: [msgStrip, oObjectPage]
+                }).placeAt("uiArea");
             });
         });
-
     </script>
 </head>
 
-<body class="sapUiBody">
-    <div id="uiArea"></div>
+<body class="sapUiBody" style="height:100vh;margin:0;">
+    <div id="uiArea" style="height:100%;"></div>
 </body>
 
 </html>
+```
