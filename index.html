@@ -56,11 +56,11 @@
                 const oObjectPage = new ObjectPageLayout("ObjectPageLayout", {
                     height: "100%",
                     showTitleInHeaderContent: true,
-                    preserveHeaderStateOnScroll: true,
+                    preserveHeaderStateOnScroll: false,
                     headerContentPinnable: true,
                     showHeaderContent: true,
                     upperCaseAnchorBar: true,
-                    enableLazyLoading: false,
+                    enableLazyLoading: true,
                     headerTitle: new ObjectPageDynamicHeaderTitle("headerTitle", {
                         expandedHeading: new HBox({ items: [new Title({ text: "Nitin Kumar", level: "H1" })] }),
                         snappedHeading: new FlexBox({
@@ -250,10 +250,12 @@
                     })]
                 }));
 
-                // Place everything
-                new VBox({
-                    items: [msgStrip, oObjectPage]
-                }).placeAt("uiArea");
+                // // Place everything
+                // new VBox({
+                //     items: [msgStrip, oObjectPage]
+                // }).placeAt("uiArea");
+                msgStrip.placeAt("uiArea");          // MessageStrip first
+                oObjectPage.placeAt("uiArea");       // ObjectPage directly after
             });
         });
     </script>
