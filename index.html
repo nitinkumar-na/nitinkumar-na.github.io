@@ -54,9 +54,13 @@
 
                 // Main ObjectPageLayout
                 const oObjectPage = new ObjectPageLayout("ObjectPageLayout", {
+                    height: "100%",
                     showTitleInHeaderContent: true,
-                    upperCaseAnchorBar: false,
-                    enableLazyLoading: true,
+                    preserveHeaderStateOnScroll: true,
+                    headerContentPinnable: true,
+                    showHeaderContent: true,
+                    upperCaseAnchorBar: true,
+                    enableLazyLoading: false,
                     headerTitle: new ObjectPageDynamicHeaderTitle("headerTitle", {
                         expandedHeading: new HBox({ items: [new Title({ text: "Nitin Kumar", level: "H1" })] }),
                         snappedHeading: new FlexBox({
@@ -256,8 +260,7 @@
 </head>
 
 <body class="sapUiBody" style="height:100vh;margin:0;">
-    <div id="uiArea" style="height:100%;"></div>
+    <div id="uiArea" style="height:100vh"></div>
 </body>
 
 </html>
-```
